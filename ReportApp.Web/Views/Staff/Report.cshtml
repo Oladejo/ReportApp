@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ReportApp.Core.Entities.Report>
+
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Report</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateReport")
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Profile.FullName)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.ReportContent)
+        </th>*@
+        <th>
+            @*@Html.DisplayNameFor(model => model.ReportType)*@ Type of Report
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReportDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmissionDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Profile.FullName)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ReportContent)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.ReportType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReportDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubmissionDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "ReportDetails", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
