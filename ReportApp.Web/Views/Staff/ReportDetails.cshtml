@@ -4,7 +4,7 @@
     ViewBag.Title = "ReportDetails";
 }
 
-<h2>ReportDetails</h2>
+<h2>Report Details</h2>
 
 <div>
     <h4>Report</h4>
@@ -31,7 +31,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ReportContent)
+            @Html.Raw(Model.ReportContent)
+            @*@Html.DisplayFor(model => model.ReportContent)*@
         </dd>
 
         <dt>
@@ -74,6 +75,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "EditReport", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Report")
 </p>

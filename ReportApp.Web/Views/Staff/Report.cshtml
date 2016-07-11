@@ -11,17 +11,11 @@
 </p>
 <table class="table">
     <tr>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Profile.FullName)
-        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.ReportContent)
-        </th>*@
         <th>
-            @*@Html.DisplayNameFor(model => model.ReportType)*@ Type of Report
+             Type of Report
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ReportDate)
@@ -34,15 +28,9 @@
 
 @foreach (var item in Model) {
     <tr>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Profile.FullName)
-        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.ReportContent)
-        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.ReportType)
         </td>
@@ -53,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.SubmissionDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Edit", "EditReport", new { id = item.Id }) |
             @Html.ActionLink("Details", "ReportDetails", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Delete", "DeleteReport", new { id = item.Id })
         </td>
     </tr>
 }

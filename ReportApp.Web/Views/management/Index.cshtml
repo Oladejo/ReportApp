@@ -6,6 +6,7 @@
 
 <h2>Staffs' List</h2>
 
+
 <p>
     @Html.ActionLink("Create New", "CreateAccount")
 </p>
@@ -20,26 +21,41 @@
         <th>
             @Html.DisplayNameFor(model => model.Unit.UnitName)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit.Department.DepartmentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Staff.Email)
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Unit.UnitName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit.UnitName)
+            </td>
+            <th>
+                @Html.DisplayFor(model => item.Unit.Department.DepartmentName)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Staff.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.Id}) |
+                @Html.ActionLink("Assign Role", "AssignRole", new { id = item.Staff.Id })
+            </td>
+        </tr>
+    }
 
 </table>
+

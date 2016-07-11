@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -111,7 +109,6 @@ namespace ReportApp.Web.Controllers
         }
         
 
-        //under Thinking if I will allow a staff to edit, delete his/her report
         public ActionResult EditReport(int? id)
         {
             if (id == null)
@@ -128,13 +125,23 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("EditReport")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,ReportDate,SubmissionDate,ProfileId,ReportType")] Report report)
+        public ActionResult Edit([Bind(Include = "Id,Title,ReportContent,ReportDate,ReportType")] Report report, HttpPostedFileBase[] attachedFile)
         {
             if (ModelState.IsValid)
             {
+                report.ProfileId = GetProfile().Id;
+                report.SubmissionDate = DateTime.Now;
                 _reportRepository.UpdateReport(report);
                 _reportRepository.Save();
-                return RedirectToAction("Index");
+
+                foreach (var file in attachedFile)
+                {
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        _reportRepository.InsertAttachedFile(file, report.Id);
+                    }
+                }
+                return RedirectToAction("Report");
             }
             return View(report);
         }
@@ -160,7 +167,7 @@ namespace ReportApp.Web.Controllers
         {
             _reportRepository.DeleteReport(id);
             _reportRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Report");
         }
 
         protected override void Dispose(bool disposing)

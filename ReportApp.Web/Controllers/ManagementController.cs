@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
@@ -11,6 +13,7 @@ using ReportApp.Web.Models;
 
 namespace ReportApp.Web.Controllers
 {
+    
     public class ManagementController : Controller
     {
         private readonly IStaffRepository _staffRepository;
@@ -18,6 +21,7 @@ namespace ReportApp.Web.Controllers
         private readonly IDepartment _departmentRepository;
         private readonly IUnit _unitRepository;
         private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager;
 
         public ManagementController()
         {
@@ -35,9 +39,10 @@ namespace ReportApp.Web.Controllers
             _unitRepository = unit;
         }
 
-        public ManagementController(ApplicationUserManager userManager)
+        public ManagementController(ApplicationUserManager userManager, ApplicationRoleManager roleManager)
         {
             UserManager = userManager;
+            RoleManager = roleManager;
         }
 
         public ApplicationUserManager UserManager
@@ -51,8 +56,19 @@ namespace ReportApp.Web.Controllers
                 _userManager = value;
             }
         }
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
 
-        // GET: management
+        // GET: Staff List
         public ActionResult Index()
         {
             return View(_staffRepository.GetProfile.ToList());
@@ -64,7 +80,6 @@ namespace ReportApp.Web.Controllers
             return View();
         }
 
-        //[HttpPost, ActionName("CreateAccount")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAccount(RegisterViewModel register)
@@ -100,7 +115,7 @@ namespace ReportApp.Web.Controllers
             return View();
         }
 
-
+        
         public bool IsUnitSelectedUnderDepartment(int departmentId, int unitId)
         {
             var checkUnit = _unitRepository.GetUnits().FirstOrDefault(d => d.DepartmentId == departmentId && d.UnitId == unitId);
@@ -114,6 +129,79 @@ namespace ReportApp.Web.Controllers
         public JsonResult UnitListByDepartmentId(int id)
         {
             return Json(new SelectList(_unitRepository.GetUnitListByDepartmentId(id).ToArray(), "UnitId", "UnitName"), JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> AssignRole(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var profile = _staffRepository.GetProfileById(id);
+            if (profile == null)
+            {
+                return HttpNotFound();
+            }
+            var userRoles = await UserManager.GetRolesAsync(id);
+            
+            return View(new AssignRoleModel
+            {
+                Id = profile.Staff.Id,
+                Name = profile.FullName,
+                Department = profile.Unit.Department.DepartmentName,
+                Unit =  profile.Unit.UnitName,
+                RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                {
+                    Selected = userRoles.Contains(x.Name),
+                    Text = x.Name,
+                    Value = x.Name
+                })
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AssignRole([Bind(Include = "Id")] AssignRoleModel roleModel, params string[] selectedRoles)
+        {
+            if (ModelState.IsValid)
+            {
+                var profile = _staffRepository.GetProfileById(roleModel.Id);
+                if (profile == null)
+                {
+                    return HttpNotFound();
+                }
+                if (selectedRoles != null)
+                {
+                    var result = await UserManager.AddToRolesAsync(roleModel.Id, selectedRoles);
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError("", result.Errors.First());
+                        return View();
+                    }
+                }
+            }
+            ModelState.AddModelError("", "Something failed.");
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Roles()
+        {
+            return View(RoleManager.Roles);
+        }
+        
+        public ActionResult EditAccount()
+        {
+            return View();
+        }
+
+        public ActionResult DeleteAccount()
+        {
+            return View();
+        }
+
+        public ActionResult Reports()
+        {
+            return View();
         }
     }
 }

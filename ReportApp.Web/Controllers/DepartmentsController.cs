@@ -7,7 +7,7 @@ using ReportApp.Core.Repository;
 
 namespace ReportApp.Web.Controllers
 {
-    //[Authorize(Users = "admin@project.com")]
+    //[Authorize(Users = "admin@project.com, hr@project.com")]
     public class DepartmentsController : Controller
     {
         private readonly IDepartment _departmentRepository;

@@ -21,5 +21,7 @@ namespace ReportApp.Web.Models
             return new InitializedDbContext();
         }
 
+        public System.Data.Entity.DbSet<ReportApp.Web.Models.AssignRoleModel> AssignRoleModels { get; set; }
+
     }
 }

@@ -1,0 +1,77 @@
+﻿@model ReportApp.Core.Entities.Report
+
+@{
+    ViewBag.Title = "ReportDetails";
+}
+
+<h2>ReportDetails</h2>
+
+<div>
+    <h4>Report</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Profile.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profile.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.Raw(Model.ReportContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmissionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubmissionDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportType)
+        </dd>
+        @if (Model.AttachedFile.Count > 0)
+        {
+            <dt>
+                Attached Document(s)
+            </dt>
+            foreach (var item in Model.AttachedFile)
+            {
+                <dd>
+                    @Html.DisplayFor(model => item.FileName) |
+                    @Html.ActionLink("Download", "DownloadAttachedFile", new { id = item.Id })
+                </dd>
+            }
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Reports")
+</p>

@@ -43,6 +43,7 @@ namespace ReportApp.Core.Repository
         public void UpdateReport(Report report)
         {
             _context.Entry(report).State = EntityState.Modified;
+            RemoveAttachedFile(report.Id);
         }
 
         public AttachedFile GetAttachedFile(int id)
@@ -95,6 +96,16 @@ namespace ReportApp.Core.Repository
             BinaryReader reader = new BinaryReader(file.InputStream);
             var fileBytes = reader.ReadBytes(file.ContentLength);
             return fileBytes;
+        }
+
+        public void RemoveAttachedFile(int? reportId)
+        {
+            AttachedFile file = _context.AttachedFiles.FirstOrDefault(x => x.ReportId == reportId);
+            if (file != null)
+            {
+                var fileToDelete = _context.AttachedFiles.Where(x => x.ReportId == reportId);
+                _context.AttachedFiles.RemoveRange(fileToDelete);
+            }
         }
 
     }

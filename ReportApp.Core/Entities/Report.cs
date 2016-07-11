@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace ReportApp.Core.Entities
 {
@@ -16,6 +17,7 @@ namespace ReportApp.Core.Entities
         public string Title { get; set; }
 
         [Display(Name = "Details")]
+        [AllowHtml]
         public string ReportContent { get; set; }
 
         [Required]
