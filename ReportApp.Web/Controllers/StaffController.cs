@@ -51,18 +51,14 @@ namespace ReportApp.Web.Controllers
             return View(reports);
         }
 
-        public ActionResult ReportDetails(int? id)
+        public ActionResult ReportDetails(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Report report = _reportRepository.GetReportById(id);
-            if (report == null)
+            if (report != null)
             {
-                return HttpNotFound();
+                return View(report);
             }
-            return View(report);
+            return HttpNotFound();
         }
 
         public ActionResult DownloadAttachedFile(int id)
@@ -109,18 +105,14 @@ namespace ReportApp.Web.Controllers
         }
         
 
-        public ActionResult EditReport(int? id)
+        public ActionResult EditReport(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Report report = _reportRepository.GetReportById(id);
-            if (report == null)
+            if (report != null)
             {
-                return HttpNotFound();
+                return View(report);
             }
-            return View(report);
+            return HttpNotFound();
         }
 
         [HttpPost, ActionName("EditReport")]
@@ -147,18 +139,14 @@ namespace ReportApp.Web.Controllers
         }
 
 
-        public ActionResult DeleteReport(int? id)
+        public ActionResult DeleteReport(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Report report = _reportRepository.GetReportById(id);
-            if (report == null)
+            if (report != null)
             {
-                return HttpNotFound();
+                return View(report);
             }
-            return View(report);
+            return HttpNotFound();
         }
 
         [HttpPost, ActionName("DeleteReport")]

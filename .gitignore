@@ -187,3 +187,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+#azeez
+Report.Web/bin
+Report.Core/bin
+Report.Web/obj
+Report.Core/obj

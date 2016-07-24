@@ -8,15 +8,17 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using ReportApp.Core.Entities;
+using ReportApp.Web.CustomAuthorization;
 using ReportApp.Web.Models;
 
 namespace ReportApp.Web.Controllers
 {
-    //[AuthoLog(Roles = "admin@project.com, hr@report.com")]
+    [CustomAuthorize]
     public class RoleController : Controller
     {
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
+        private const string RoleError = "Role Name already Exists!!!";
 
         public RoleController() { }
         public RoleController(ApplicationUserManager userManager, ApplicationRoleManager roleManager)
@@ -107,7 +109,7 @@ namespace ReportApp.Web.Controllers
                     }
                     return RedirectToAction("Index");
                 }
-                ModelState.AddModelError("", "Role Name already Exist!!!");
+                ModelState.AddModelError("", RoleError);
                 RoleViewModel roleModel = new RoleViewModel {Name = role.Name };
                 return View(roleModel);
             }

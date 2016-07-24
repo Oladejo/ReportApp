@@ -175,7 +175,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
-    <Compile Include="Controllers\UnitHeadController.cs" />
+    <Compile Include="CustomAuthorization\CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -370,6 +370,12 @@
     <Content Include="Scripts\tinymce\themes\modern\theme.min.js" />
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
+    <Content Include="Views\Staff\CreateReport.cshtml" />
+    <Content Include="Views\Staff\DeleteReport.cshtml" />
+    <Content Include="Views\Staff\EditReport.cshtml" />
+    <Content Include="Views\Staff\Index.cshtml" />
+    <Content Include="Views\Staff\Report.cshtml" />
+    <Content Include="Views\Staff\ReportDetails.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -379,7 +385,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -415,14 +420,8 @@
     <Content Include="Views\Unit\Details.cshtml" />
     <Content Include="Views\Unit\Edit.cshtml" />
     <Content Include="Views\Unit\Index.cshtml" />
-    <Content Include="Views\Staff\Index.cshtml" />
-    <Content Include="Views\Staff\Report.cshtml" />
-    <Content Include="Views\Staff\ReportDetails.cshtml" />
-    <Content Include="Views\Staff\CreateReport.cshtml" />
     <Content Include="Views\management\Index.cshtml" />
     <Content Include="Views\management\CreateAccount.cshtml" />
-    <Content Include="Views\Staff\DeleteReport.cshtml" />
-    <Content Include="Views\Staff\EditReport.cshtml" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.json" />
@@ -446,6 +445,9 @@
     <Content Include="Views\Role\Delete.cshtml" />
     <Content Include="Views\management\AssignRole.cshtml" />
     <Content Include="Views\management\Roles.cshtml" />
+    <Content Include="Views\Home\PageNotFound.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\AuthorizedFailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

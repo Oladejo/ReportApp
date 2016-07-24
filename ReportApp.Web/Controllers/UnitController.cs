@@ -4,10 +4,11 @@ using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
 using ReportApp.Core.Entities;
 using ReportApp.Core.Repository;
+using ReportApp.Web.CustomAuthorization;
 
 namespace ReportApp.Web.Controllers
 {
-    //[Authorize(Users = "admin@project.com")]
+    [CustomAuthorize]
     public class UnitController : Controller
     {
         private readonly IUnit _unit;
@@ -29,29 +30,22 @@ namespace ReportApp.Web.Controllers
         public ActionResult Index()
         {
             return View(_unit.GetUnits());
-            //var units = db.Units.Include(u => u.Department);
-            //return System.Web.UI.WebControls.View(units.ToList());
         }
 
         // GET: Unit/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            Unit unit = _unit.GetUnitById((int) id);
+            if (unit != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(unit);
             }
-            Unit unit = _unit.GetUnitById((int) id); //db.Units.Find(id);
-            if (unit == null)
-            {
-                return HttpNotFound();
-            }
-            return View(unit);
+            return HttpNotFound();
         }
 
         // GET: Unit/Create
         public ActionResult Create()
         {
-            //ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "DepartmentName");
             PopulateDepartmentsDropDownList();
             return View();
         }
@@ -72,19 +66,15 @@ namespace ReportApp.Web.Controllers
         }
 
         // GET: Unit/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            Unit unit = _unit.GetUnitById(id);
+            if (unit != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                PopulateDepartmentsDropDownList(unit.DepartmentId);
+                return View(unit);
             }
-            Unit unit = _unit.GetUnitById((int) id);
-            if (unit == null)
-            {
-                return HttpNotFound();
-            }
-            PopulateDepartmentsDropDownList(unit.DepartmentId);
-            return View(unit);
+            return HttpNotFound();
         }
 
         // POST: Unit/Edit/5
@@ -109,18 +99,14 @@ namespace ReportApp.Web.Controllers
         }
         
         // GET: Unit/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Unit unit = _unit.GetUnitById((int) id);
-            if (unit == null)
+            if (unit != null)
             {
-                return HttpNotFound();
+                return View(unit);
             }
-            return View(unit);
+            return HttpNotFound();
         }
 
         // POST: Unit/Delete/5

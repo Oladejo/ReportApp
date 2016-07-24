@@ -20,7 +20,11 @@ namespace ReportApp.Web.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        public ActionResult PageNotFound()
+        {
             return View();
         }
     }

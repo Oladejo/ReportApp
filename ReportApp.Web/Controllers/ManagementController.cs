@@ -1,19 +1,18 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
 using ReportApp.Core.Entities;
 using ReportApp.Core.Repository;
+using ReportApp.Web.CustomAuthorization;
 using ReportApp.Web.Models;
 
 namespace ReportApp.Web.Controllers
 {
-    
+    [CustomAuthorize]
     public class ManagementController : Controller
     {
         private readonly IStaffRepository _staffRepository;
@@ -133,30 +132,25 @@ namespace ReportApp.Web.Controllers
 
         public async Task<ActionResult> AssignRole(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             var profile = _staffRepository.GetProfileById(id);
-            if (profile == null)
+            if (profile != null)
             {
-                return HttpNotFound();
-            }
-            var userRoles = await UserManager.GetRolesAsync(id);
-            
-            return View(new AssignRoleModel
-            {
-                Id = profile.Staff.Id,
-                Name = profile.FullName,
-                Department = profile.Unit.Department.DepartmentName,
-                Unit =  profile.Unit.UnitName,
-                RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                var userRoles = await UserManager.GetRolesAsync(id);
+                return View(new AssignRoleModel
                 {
-                    Selected = userRoles.Contains(x.Name),
-                    Text = x.Name,
-                    Value = x.Name
-                })
-            });
+                    Id = profile.Staff.Id,
+                    Name = profile.FullName,
+                    Department = profile.Unit.Department.DepartmentName,
+                    Unit = profile.Unit.UnitName,
+                    RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                    {
+                        Selected = userRoles.Contains(x.Name),
+                        Text = x.Name,
+                        Value = x.Name
+                    })
+                });
+            }
+            return HttpNotFound();
         }
 
         [HttpPost]
@@ -166,40 +160,42 @@ namespace ReportApp.Web.Controllers
             if (ModelState.IsValid)
             {
                 var profile = _staffRepository.GetProfileById(roleModel.Id);
-                if (profile == null)
+                if (profile != null)
                 {
-                    return HttpNotFound();
-                }
-                if (selectedRoles != null)
-                {
-                    var result = await UserManager.AddToRolesAsync(roleModel.Id, selectedRoles);
-                    if (!result.Succeeded)
+                    if (selectedRoles != null)
                     {
-                        ModelState.AddModelError("", result.Errors.First());
-                        return View();
+                        var result = await UserManager.AddToRolesAsync(roleModel.Id, selectedRoles);
+                        if (!result.Succeeded)
+                        {
+                            ModelState.AddModelError("", result.Errors.First());
+                            return View();
+                        }
                     }
                 }
+                return HttpNotFound();
             }
             ModelState.AddModelError("", "Something failed.");
             return RedirectToAction("Index");
         }
+
 
         public ActionResult Roles()
         {
             return View(RoleManager.Roles);
         }
         
-        public ActionResult EditAccount()
+        //Not done
+        public ActionResult EditAccount(int id)
         {
             return View();
         }
 
-        public ActionResult DeleteAccount()
+        public ActionResult DeleteAccount(int id)
         {
             return View();
         }
 
-        public ActionResult Reports()
+        public ActionResult Reports(string id)
         {
             return View();
         }
