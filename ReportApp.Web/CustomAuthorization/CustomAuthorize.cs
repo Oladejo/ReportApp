@@ -19,8 +19,8 @@ namespace ReportApp.Web.CustomAuthorization
 
         private void IsUserAuthorized(AuthorizationContext filterContext)
         {
-            if (filterContext.Result == null && (filterContext.HttpContext.User.Identity.Name.Equals("admin@project.com") 
-                || filterContext.HttpContext.User.IsInRole("hr@report.com")))
+            if (filterContext.Result == null && (filterContext.HttpContext.User.IsInRole("Admin")
+                || filterContext.HttpContext.User.IsInRole("admin@project.com")))
                 return;
 
             if (filterContext.HttpContext.User.Identity.IsAuthenticated)

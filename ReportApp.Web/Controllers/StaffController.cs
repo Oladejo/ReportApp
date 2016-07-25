@@ -61,12 +61,6 @@ namespace ReportApp.Web.Controllers
             return HttpNotFound();
         }
 
-        public ActionResult DownloadAttachedFile(int id)
-        {
-            var fileToRetrieve = _reportRepository.GetAttachedFile(id);
-            return File(fileToRetrieve.Content, fileToRetrieve.MimeType, fileToRetrieve.FileName);
-        }
-
         // GET: Staff/Create
         public ActionResult CreateReport()
         {
