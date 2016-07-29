@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
 using ReportApp.Core.Entities;
@@ -94,7 +93,7 @@ namespace ReportApp.Web.Controllers
 
         private void PopulateDepartmentsDropDownList( object selectedDepartment = null)
         {
-            var departmentsQuery = _departmentRepository.GetDepartments(); //_unit.GetDepartments();
+            var departmentsQuery = _departmentRepository.GetDepartments();
             ViewBag.DepartmentId = new SelectList(departmentsQuery, "DepartmentId", "DepartmentName", selectedDepartment);
         }
         

@@ -175,6 +175,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
+    <Compile Include="CustomAuthorization\AuthorizationHandlers.cs" />
     <Compile Include="CustomAuthorization\CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace ReportApp.Web.CustomAuthorization
 {
@@ -19,8 +20,7 @@ namespace ReportApp.Web.CustomAuthorization
 
         private void IsUserAuthorized(AuthorizationContext filterContext)
         {
-            if (filterContext.Result == null && (filterContext.HttpContext.User.IsInRole("Admin")
-                || filterContext.HttpContext.User.IsInRole("admin@project.com")))
+            if (filterContext.Result == null && ( filterContext.HttpContext.User.IsInRole("Admin") || filterContext.HttpContext.User.Identity.GetUserName() == "admin@project.com"))
                 return;
 
             if (filterContext.HttpContext.User.Identity.IsAuthenticated)

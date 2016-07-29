@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
 using ReportApp.Core.Entities;
 using ReportApp.Core.Repository;
+using ReportApp.Web.CustomAuthorization;
 
 namespace ReportApp.Web.Controllers
 {
-    //[Authorize(Roles = "Department")]
+    [ClaimAuthorization]
     public class LeaderController : Controller
     {
         private readonly IStaffRepository _staffRepository;
