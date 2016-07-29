@@ -21,16 +21,12 @@ namespace ReportApp.Web.Controllers
         {
             _staffRepository = new StaffRepository(new EfDbContext());
             _reportRepository = new ReportRepository(new EfDbContext());
-            _departmentRepository = new DepartmentRepository(new EfDbContext());
-            _unitRepository = new UnitRepository(new EfDbContext());
         }
 
-        public LeaderController(IStaffRepository staffRepository, IReportRepository reportRepository, IDepartment department, IUnit unit)
+        public LeaderController(IStaffRepository staffRepository, IReportRepository reportRepository)
         {
             _staffRepository = staffRepository;
             _reportRepository = reportRepository;
-            _departmentRepository = department;
-            _unitRepository = unit;
         }
 
         // GET staffs based on the role assign to the user

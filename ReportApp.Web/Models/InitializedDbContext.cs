@@ -20,6 +20,5 @@ namespace ReportApp.Web.Models
         {
             return new InitializedDbContext();
         }
-
     }
 }

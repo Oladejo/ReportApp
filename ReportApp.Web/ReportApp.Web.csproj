@@ -372,8 +372,6 @@
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Views\Staff\CreateReport.cshtml" />
-    <Content Include="Views\Staff\DeleteReport.cshtml" />
-    <Content Include="Views\Staff\EditReport.cshtml" />
     <Content Include="Views\Staff\Index.cshtml" />
     <Content Include="Views\Staff\Report.cshtml" />
     <Content Include="Views\Staff\ReportDetails.cshtml" />
@@ -449,6 +447,8 @@
     <Content Include="Views\Home\PageNotFound.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\AuthorizedFailed.cshtml" />
+    <Content Include="Views\Staff\DeleteReport.cshtml" />
+    <Content Include="Views\Staff\EditReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
