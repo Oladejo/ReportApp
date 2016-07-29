@@ -34,7 +34,7 @@ namespace ReportApp.Core.Repository
 
         public void DeleteDepartment(int departmentId)
         {
-            Department department = GetDepartmentById(departmentId); //_context.Departments.Find(departmentId);
+            Department department = GetDepartmentById(departmentId); 
             _context.Departments.Remove(department);
         }
 

@@ -24,7 +24,7 @@ namespace ReportApp.Core.Repository
             return _context.Reports.ToList();
         }
 
-        public Report GetReportById(int? reportId)
+        public Report GetReportById(int reportId)
         {
             return _context.Reports.Find(reportId);
         }
@@ -77,7 +77,6 @@ namespace ReportApp.Core.Repository
             GC.SuppressFinalize(this);
         }
 
-        //upload attached file
         public void InsertAttachedFile(HttpPostedFileBase file, int reportId)
         {
             AttachedFile newAttachedFile = new AttachedFile
