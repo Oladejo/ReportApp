@@ -450,6 +450,7 @@
     <Content Include="Views\Shared\AuthorizedFailed.cshtml" />
     <Content Include="Views\Staff\DeleteReport.cshtml" />
     <Content Include="Views\Staff\EditReport.cshtml" />
+    <Content Include="Views\Leader\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
