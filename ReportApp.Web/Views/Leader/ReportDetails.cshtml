@@ -4,7 +4,7 @@
     ViewBag.Title = "ReportDetails";
 }
 
-<h2>ReportDetails</h2>
+<h2>Report Details</h2>
 
 <div>
     <h4>Report</h4>
@@ -31,7 +31,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ReportContent)
+            @Html.Raw(Model.ReportContent)
+            @*@Html.DisplayFor(model => model.ReportContent)*@
         </dd>
 
         <dt>
@@ -57,10 +58,23 @@
         <dd>
             @Html.DisplayFor(model => model.ReportType)
         </dd>
+        @if (Model.AttachedFile.Count > 0)
+        {
+            <dt>
+                Attached Document(s)
+            </dt>
+            foreach (var item in Model.AttachedFile)
+            {
+                <dd>
+                    @Html.DisplayFor(model => item.FileName) |
+                    @Html.ActionLink("Download", "DownloadAttachedFile", new { id = item.Id })
+                </dd>
+            }
+        }
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "EditReport", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Report")
 </p>
