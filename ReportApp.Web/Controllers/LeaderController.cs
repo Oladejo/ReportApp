@@ -63,7 +63,7 @@ namespace ReportApp.Web.Controllers
             return HttpNotFound();
         }
         //Staff reports
-        public ActionResult Report()
+        public ActionResult Reports()
         {
             var profile = GetProfile();
             List<Report> reports = null;
