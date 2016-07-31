@@ -6,9 +6,6 @@
 
 <h2>Reports</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -27,7 +24,7 @@
             @Html.DisplayNameFor(model => model.SubmissionDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ReportType)
+            Type of Report
         </th>
         <th></th>
     </tr>
@@ -41,9 +38,6 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ReportContent)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.ReportDate)
         </td>
         <td>
@@ -53,9 +47,7 @@
             @Html.DisplayFor(modelItem => item.ReportType)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
         </td>
     </tr>
 }
