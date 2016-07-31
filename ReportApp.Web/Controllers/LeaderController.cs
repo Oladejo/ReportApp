@@ -62,6 +62,7 @@ namespace ReportApp.Web.Controllers
             }
             return HttpNotFound();
         }
+
         //Staff reports
         public ActionResult Reports()
         {
@@ -77,6 +78,7 @@ namespace ReportApp.Web.Controllers
             }
             return View(reports);
         }
+
         //staff report details
         public ActionResult ReportDetails(int id)
         {
