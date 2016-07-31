@@ -20,5 +20,9 @@ namespace ReportApp.Web.Models
         {
             return new InitializedDbContext();
         }
+
+        public System.Data.Entity.DbSet<ReportApp.Core.Entities.Report> Reports { get; set; }
+
+        public System.Data.Entity.DbSet<ReportApp.Core.Entities.Profile> Profiles { get; set; }
     }
 }
