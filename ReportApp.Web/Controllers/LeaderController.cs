@@ -83,13 +83,15 @@ namespace ReportApp.Web.Controllers
         {
             var profile = GetProfile();
             List<Report> reports = null;
-            if (HttpContext.User.IsInRole("Department"))
+            string role = GetUserRole();
+            switch (role)
             {
-                reports = _reportRepository.GetReport().Where(x => x.Profile.Unit.DepartmentId == profile.Unit.DepartmentId).ToList();
-            }
-            else if (HttpContext.User.IsInRole("Unit"))
-            {
-                reports = _reportRepository.GetReport().Where(x => x.Profile.UnitId == profile.UnitId).ToList();
+                case "Department":
+                    reports = _reportRepository.GetReport().Where(x => x.Profile.Unit.DepartmentId == profile.Unit.DepartmentId).ToList();
+                    break;
+                case "Unit":
+                    reports = _reportRepository.GetReport().Where(x => x.Profile.UnitId == profile.UnitId).ToList();
+                    break;
             }
             return View(reports);
         }
