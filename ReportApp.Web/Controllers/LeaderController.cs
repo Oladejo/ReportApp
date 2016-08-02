@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using ReportApp.Core.Abstract;
@@ -33,13 +34,15 @@ namespace ReportApp.Web.Controllers
         {
             var profile = GetProfile();
             List<Profile> staff = null;
-            if (HttpContext.User.IsInRole("Department"))
+            string role = GetUserRole();
+            switch (role)
             {
-                staff = _staffRepository.GetProfile.Where(x => x.Unit.DepartmentId == profile.Unit.DepartmentId).ToList();
-            }
-            else if (HttpContext.User.IsInRole("Unit"))
-            {
-                staff = _staffRepository.GetProfile.Where(x => x.UnitId == profile.UnitId).ToList();
+                case "Department":
+                    staff = _staffRepository.GetProfile.Where(x => x.Unit.DepartmentId == profile.Unit.DepartmentId).ToList();
+                    break;
+                case "Unit":
+                    staff = _staffRepository.GetProfile.Where(x => x.UnitId == profile.UnitId).ToList();
+                    break;
             }
             return View(staff);
         }
@@ -51,6 +54,19 @@ namespace ReportApp.Web.Controllers
             return profile;
         }
 
+        private string GetUserRole()
+        {
+            string roleName = null;
+            if (HttpContext.User.IsInRole("Department"))
+            {
+                roleName = "Department";
+            }
+            else if (HttpContext.User.IsInRole("Unit"))
+            {
+                roleName = "Unit";
+            }
+            return roleName;
+        }
 
         //Staff Details by Id
         public ActionResult Details(string id)
@@ -63,7 +79,7 @@ namespace ReportApp.Web.Controllers
             return HttpNotFound();
         }
 
-        //Staff reports
+        //Staff reports list
         public ActionResult Reports()
         {
             var profile = GetProfile();
