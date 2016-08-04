@@ -187,10 +187,10 @@ namespace ReportApp.Web.Controllers
         //Not done
         public ActionResult EditAccount(int id)
         {
-            Staff staff = _staffRepository.GetProfileById(id);
-            if (staff != null)
+            Profile profile = _staffRepository.GetProfileById(id);
+            if (profile != null)
             {
-                return View(staff);
+                return View(profile);
             }
             return HttpNotFound();
         }
