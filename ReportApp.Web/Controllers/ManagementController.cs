@@ -185,12 +185,28 @@ namespace ReportApp.Web.Controllers
         }
         
         //Not done
-        public ActionResult EditAccount(int id)
+        public async Task<ActionResult> EditAccount(int id)
         {
             Profile profile = _staffRepository.GetProfileById(id);
             if (profile != null)
             {
-                return View();
+                var userRoles = await UserManager.GetRolesAsync(profile.Staff.Id);
+
+                return View(new StaffProfile()
+                {
+                    FullName = profile.FullName,
+                    PhoneNumber = profile.Staff.PhoneNumber,
+                    Email = profile.Staff.Email,
+                    DepartmentId = profile.Unit.DepartmentId,
+                    UnitId = profile.UnitId,
+                    Gender = profile.Gender,
+                    RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                    {
+                        Selected = userRoles.Contains(x.Name),
+                        Text = x.Name,
+                        Value = x.Name
+                    })
+                });
             }
             return HttpNotFound();
         }
