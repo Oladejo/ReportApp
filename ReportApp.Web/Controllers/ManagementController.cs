@@ -192,6 +192,7 @@ namespace ReportApp.Web.Controllers
             {
                 var userRoles = await UserManager.GetRolesAsync(profile.Staff.Id);
 
+                ViewBag.Department = new SelectList(_departmentRepository.GetDepartments(), "DepartmentId", "DepartmentName");
                 return View(new StaffProfile()
                 {
                     FullName = profile.FullName,
@@ -213,7 +214,7 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("EditAccount")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAccount()
+        public ActionResult EditAccount(StaffProfile profile)
         {
             return View();
         }
