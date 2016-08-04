@@ -34,7 +34,7 @@ namespace ReportApp.Core.Repository
             return _context.Profiles.FirstOrDefault(x => x.Staff.Id == id);
         }
 
-        public Profile GetProfileById(int? id)
+        public Profile GetProfileById(int id)
         {
             return _context.Profiles.FirstOrDefault(x => x.Id == id);
         }
