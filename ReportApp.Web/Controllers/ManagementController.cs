@@ -187,7 +187,7 @@ namespace ReportApp.Web.Controllers
         }
         
         //Not done
-        public async Task<ActionResult> EditAccount(int id)
+        public ActionResult EditAccount(int id)
         {
             Profile profile = _staffRepository.GetProfileById(id);
             if (profile != null)
@@ -209,7 +209,7 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("EditAccount")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAccount(RegisterViewModel staffProfile)
+        public ActionResult EditAccount(RegisterViewModel staffProfile)
         {
             if (ModelState.IsValid)
             {
