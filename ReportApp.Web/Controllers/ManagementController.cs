@@ -187,7 +187,12 @@ namespace ReportApp.Web.Controllers
         //Not done
         public ActionResult EditAccount(int id)
         {
-            return View();
+            Staff staff = _staffRepository.GetProfileById(id);
+            if (staff != null)
+            {
+                return View(staff);
+            }
+            return HttpNotFound();
         }
 
         public ActionResult DeleteAccount(int id)
