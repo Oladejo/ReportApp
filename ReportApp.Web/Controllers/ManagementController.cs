@@ -186,7 +186,6 @@ namespace ReportApp.Web.Controllers
             return View(RoleManager.Roles);
         }
         
-        //Not done
         public ActionResult EditAccount(int id)
         {
             Profile profile = _staffRepository.GetProfileById(id);
@@ -231,6 +230,7 @@ namespace ReportApp.Web.Controllers
             return View();
         }
 
+        //Not done
         public ActionResult DeleteAccount(int id)
         {
             return View();
