@@ -31,6 +31,9 @@ namespace ReportApp.Web.Models
     public class StaffProfile
     {
         [Required]
+        public string Id { get; set; } 
+
+        [Required]
         [Display(Name = "Full Name")]
         [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
         public string FullName { get; set; }

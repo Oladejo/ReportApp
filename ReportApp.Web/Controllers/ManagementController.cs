@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
@@ -190,23 +192,16 @@ namespace ReportApp.Web.Controllers
             Profile profile = _staffRepository.GetProfileById(id);
             if (profile != null)
             {
-                var userRoles = await UserManager.GetRolesAsync(profile.Staff.Id);
-
                 ViewBag.Department = new SelectList(_departmentRepository.GetDepartments(), "DepartmentId", "DepartmentName");
-                return View(new StaffProfile()
+                return View(new RegisterViewModel()
                 {
+                    Id = profile.Staff.Id,
                     FullName = profile.FullName,
                     PhoneNumber = profile.Staff.PhoneNumber,
                     Email = profile.Staff.Email,
                     DepartmentId = profile.Unit.DepartmentId,
                     UnitId = profile.UnitId,
-                    Gender = profile.Gender,
-                    RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
-                    {
-                        Selected = userRoles.Contains(x.Name),
-                        Text = x.Name,
-                        Value = x.Name
-                    })
+                    Gender = profile.Gender
                 });
             }
             return HttpNotFound();
@@ -214,8 +209,25 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("EditAccount")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAccount(StaffProfile profile)
+        public async Task<ActionResult> EditAccount(RegisterViewModel staffProfile)
         {
+            if (ModelState.IsValid)
+            {
+                if (IsUnitSelectedUnderDepartment(staffProfile.DepartmentId, staffProfile.UnitId))
+                {
+                    Profile profile = _staffRepository.GetProfileById(staffProfile.Id);
+                    profile.FullName = staffProfile.FullName;
+                    profile.Staff.Email = staffProfile.Email;
+                    profile.Staff.UserName = staffProfile.Email;
+                    profile.Gender = staffProfile.Gender;
+                    profile.UnitId = staffProfile.UnitId;
+                    profile.Staff.PhoneNumber = staffProfile.PhoneNumber;
+                    _staffRepository.UpdateProfile(profile);
+                    _staffRepository.Save();
+                    return RedirectToAction("Index");
+                }
+            }
+            ViewBag.Department = new SelectList(_departmentRepository.GetDepartments(), "DepartmentId", "DepartmentName");
             return View();
         }
 
