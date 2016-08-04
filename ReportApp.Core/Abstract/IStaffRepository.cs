@@ -9,7 +9,7 @@ namespace ReportApp.Core.Abstract
         IEnumerable<Profile> GetProfile { get; }
         Staff GetStaff(string staffId);
         Profile GetProfileById(string id);
-        Profile GetProfileById(int? id);
+        Profile GetProfileById(int id);
         void InsertProfile(Profile profile);
         void DeleteProfile(int profileId);
         void UpdateProfile(Profile profile);
