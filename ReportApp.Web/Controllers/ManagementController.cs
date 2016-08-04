@@ -190,9 +190,16 @@ namespace ReportApp.Web.Controllers
             Profile profile = _staffRepository.GetProfileById(id);
             if (profile != null)
             {
-                return View(profile);
+                return View();
             }
             return HttpNotFound();
+        }
+
+        [HttpPost, ActionName("EditAccount")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditAccount()
+        {
+            return View();
         }
 
         public ActionResult DeleteAccount(int id)
