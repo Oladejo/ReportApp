@@ -24,7 +24,8 @@ namespace ReportApp.Web.Controllers
         }
 
         // GET: Departments
-        public ActionResult Index()
+        //Change from ActionResult to viewResult to use its model for testing
+        public ViewResult Index()
         {
             return View(_departmentRepository.GetDepartments());
         }

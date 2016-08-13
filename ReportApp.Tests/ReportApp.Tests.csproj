@@ -87,7 +87,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ReportApp.WebControllers\DepartmentControllerTest.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
