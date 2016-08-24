@@ -17,19 +17,34 @@ namespace ReportApp.Tests.ReportApp.WebControllers
     [TestClass]
     public class DepartmentControllerTest
     {
-        [TestMethod]
-        public void DepartmentIndexViewContainListOfDepartment()
-        {
-            //Arrange
-            Mock<IDepartment> mock = new Mock<IDepartment>();
+        private Mock<IDepartment> mock;
+        private DepartmentsController departments;
 
+        [TestInitialize]
+        public void Initialize()
+        {
+            mock = new Mock<IDepartment>();
             mock.Setup(m => m.GetDepartments()).Returns(new List<Department>
             {
                 new Department { DepartmentId = 1, DepartmentName = "Account"},
                 new Department { DepartmentId = 2, DepartmentName = "Sales"} 
             }.AsEnumerable());
 
-            DepartmentsController departments = new DepartmentsController(mock.Object);
+           departments = new DepartmentsController(mock.Object);
+        }
+        
+
+        [TestMethod]
+        public void DepartmentIndexViewContainListOfDepartment()
+        {
+            //Arrange
+            //mock.Setup(m => m.GetDepartments()).Returns(new List<Department>
+            //{
+            //    new Department { DepartmentId = 1, DepartmentName = "Account"},
+            //    new Department { DepartmentId = 2, DepartmentName = "Sales"} 
+            //}.AsEnumerable());
+
+            //DepartmentsController departments = new DepartmentsController(mock.Object);
 
             //Act
             var model = departments.Index() as ViewResult;
@@ -45,15 +60,13 @@ namespace ReportApp.Tests.ReportApp.WebControllers
         public void DepartmentDetailsViewById()
         {
             //Arrange
-            Mock<IDepartment> mock = new Mock<IDepartment>();
+            //mock.Setup(m => m.GetDepartments()).Returns(new List<Department>
+            //{
+            //    new Department { DepartmentId = 1, DepartmentName = "Account"},
+            //    new Department { DepartmentId = 2, DepartmentName = "Sales"} 
+            //}.AsEnumerable());
 
-            mock.Setup(m => m.GetDepartments()).Returns(new List<Department>
-            {
-                new Department { DepartmentId = 1, DepartmentName = "Account"},
-                new Department { DepartmentId = 2, DepartmentName = "Sales"} 
-            }.AsEnumerable());
-
-            DepartmentsController departments = new DepartmentsController(mock.Object);
+            //DepartmentsController departments = new DepartmentsController(mock.Object);
 
             //Act
             var model = departments.Details(2);
@@ -61,6 +74,12 @@ namespace ReportApp.Tests.ReportApp.WebControllers
 
             //Assert
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestCreate()
+        {
+            
         }
     }
 }
