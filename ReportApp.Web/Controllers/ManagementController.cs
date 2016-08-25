@@ -230,6 +230,16 @@ namespace ReportApp.Web.Controllers
             return View();
         }
 
+        public ActionResult Details(string id)
+        {
+            Profile profile = _staffRepository.GetProfileById(id);
+            if (profile != null)
+            {
+                return View(profile);
+            }
+            return HttpNotFound();
+        }
+
         //Not done
         public ActionResult DeleteAccount(int id)
         {
