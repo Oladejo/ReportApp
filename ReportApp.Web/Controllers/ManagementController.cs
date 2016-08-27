@@ -116,7 +116,6 @@ namespace ReportApp.Web.Controllers
             return View();
         }
 
-        
         public bool IsUnitSelectedUnderDepartment(int departmentId, int unitId)
         {
             var checkUnit = _unitRepository.GetUnits().FirstOrDefault(d => d.DepartmentId == departmentId && d.UnitId == unitId);
@@ -240,10 +239,15 @@ namespace ReportApp.Web.Controllers
             return HttpNotFound();
         }
 
-        //Not done
-        public ActionResult DeleteAccount(int id)
+        
+        public ActionResult DeleteAccount(string id)
         {
-            return View();
+            Profile profile = _staffRepository.GetProfileById(id);
+            if (profile != null)
+            {
+                return View(profile);
+            }
+            return HttpNotFound();
         }
 
         public ActionResult Reports(string id)
