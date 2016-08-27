@@ -116,7 +116,6 @@ namespace ReportApp.Web.Controllers
             return View();
         }
 
-        
         public bool IsUnitSelectedUnderDepartment(int departmentId, int unitId)
         {
             var checkUnit = _unitRepository.GetUnits().FirstOrDefault(d => d.DepartmentId == departmentId && d.UnitId == unitId);
@@ -239,16 +238,59 @@ namespace ReportApp.Web.Controllers
             }
             return HttpNotFound();
         }
-
-        //Not done
-        public ActionResult DeleteAccount(int id)
+     
+        public ActionResult DeleteAccount(string id)
         {
-            return View();
+            Profile profile = _staffRepository.GetProfileById(id);
+            if (profile != null)
+            {
+                return View(profile);
+            }
+            return HttpNotFound();
         }
 
-        public ActionResult Reports(string id)
+        [HttpPost, ActionName("DeleteAccount")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAccount(int id)
         {
-            return View();
+            _staffRepository.DeleteProfile(id);
+            _staffRepository.Save();
+            return RedirectToAction("Index");
+        }
+
+        //Get All reports
+        public ActionResult Reports()
+        {
+            var reports = _reportRepository.GetReport().ToList();
+            return View(reports);
+        }
+
+        //Get list of reports of a particular staff
+        public ActionResult StaffReports(int id)
+        {
+            var reports = _reportRepository.GetReport().Where(x => x.Profile.Id == id).ToList();
+            return View(reports);
+        }
+
+        public ActionResult ReportDetails(int id)
+        {
+            Report report = _reportRepository.GetReportById(id);
+            if (report != null)
+            {
+                return View(report);
+            }
+            return HttpNotFound();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _roleManager.Dispose();
+            _departmentRepository.Dispose();
+            _userManager.Dispose();
+            _reportRepository.Dispose();
+            _staffRepository.Dispose();
+            _unitRepository.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
