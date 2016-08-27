@@ -250,6 +250,15 @@ namespace ReportApp.Web.Controllers
             return HttpNotFound();
         }
 
+        [HttpPost, ActionName("DeleteAccount")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAccount(int id)
+        {
+            _staffRepository.DeleteProfile(id);
+            _staffRepository.Save();
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Reports(string id)
         {
             return View();
