@@ -282,6 +282,15 @@ namespace ReportApp.Web.Controllers
             return HttpNotFound();
         }
 
-
+        protected override void Dispose(bool disposing)
+        {
+            _roleManager.Dispose();
+            _departmentRepository.Dispose();
+            _userManager.Dispose();
+            _reportRepository.Dispose();
+            _staffRepository.Dispose();
+            _unitRepository.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }
