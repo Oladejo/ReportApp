@@ -258,16 +258,28 @@ namespace ReportApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Reports(string id)
+        //Get All reports
+        public ActionResult Reports()
         {
             var reports = _reportRepository.GetReport().ToList();
             return View(reports);
         }
 
+        //Get list of reports of a particular staff
         public ActionResult StaffReports(int id)
         {
             var reports = _reportRepository.GetReport().Where(x => x.Profile.Id == id).ToList();
             return View(reports);
+        }
+
+        public ActionResult ReportDetails(int id)
+        {
+            Report report = _reportRepository.GetReportById(id);
+            if (report != null)
+            {
+                return View(report);
+            }
+            return HttpNotFound();
         }
 
 
