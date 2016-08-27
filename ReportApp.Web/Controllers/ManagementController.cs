@@ -264,7 +264,11 @@ namespace ReportApp.Web.Controllers
             return View(reports);
         }
 
-
+        public ActionResult StaffReports(int id)
+        {
+            var reports = _reportRepository.GetReport().Where(x => x.Profile.Id == id).ToList();
+            return View(reports);
+        }
 
 
     }
