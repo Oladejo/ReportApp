@@ -238,8 +238,7 @@ namespace ReportApp.Web.Controllers
             }
             return HttpNotFound();
         }
-
-        
+     
         public ActionResult DeleteAccount(string id)
         {
             Profile profile = _staffRepository.GetProfileById(id);
@@ -261,7 +260,12 @@ namespace ReportApp.Web.Controllers
 
         public ActionResult Reports(string id)
         {
-            return View();
+            var reports = _reportRepository.GetReport().ToList();
+            return View(reports);
         }
+
+
+
+
     }
 }
