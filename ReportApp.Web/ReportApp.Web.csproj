@@ -454,6 +454,7 @@
     <Content Include="Views\Leader\Reports.cshtml" />
     <Content Include="Views\Leader\ReportDetails.cshtml" />
     <Content Include="Views\management\EditAccount.cshtml" />
+    <Content Include="Views\management\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
