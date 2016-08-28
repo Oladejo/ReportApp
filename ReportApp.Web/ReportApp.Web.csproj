@@ -456,6 +456,7 @@
     <Content Include="Views\management\EditAccount.cshtml" />
     <Content Include="Views\management\Details.cshtml" />
     <Content Include="Views\management\Delete.cshtml" />
+    <Content Include="Views\management\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
