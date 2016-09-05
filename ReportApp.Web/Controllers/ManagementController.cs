@@ -177,7 +177,6 @@ namespace ReportApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
-
         public ActionResult Roles()
         {
             return View(RoleManager.Roles);

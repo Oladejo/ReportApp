@@ -96,7 +96,6 @@ namespace ReportApp.Web.Controllers
             }
             return View(report);
         }
-        
 
         public ActionResult EditReport(int id)
         {
