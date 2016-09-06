@@ -204,13 +204,18 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("EditAccount")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAccount(RegisterViewModel staffProfile)
+        public async Task<ActionResult> EditAccount(RegisterViewModel staffProfile)
         {
             if (ModelState.IsValid)
             {
                 if (IsUnitSelectedUnderDepartment(staffProfile.DepartmentId, staffProfile.UnitId))
                 {
                     Profile profile = _staffRepository.GetProfileById(staffProfile.Id);
+                    Staff staff = await UserManager.FindByIdAsync(profile.Staff.Id);
+                    staff.Email = staffProfile.Email;
+                    staff.UserName = staffProfile.Email;
+                    staff.PhoneNumber = staffProfile.PhoneNumber;
+                    await UserManager.UpdateAsync(staff);
                     profile.FullName = staffProfile.FullName;
                     profile.Staff.Email = staffProfile.Email;
                     profile.Staff.UserName = staffProfile.Email;
