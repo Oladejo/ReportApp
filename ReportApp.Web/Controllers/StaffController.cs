@@ -50,7 +50,7 @@ namespace ReportApp.Web.Controllers
             return View(reports);
         }
 
-        public ActionResult ReportDetails(int id)
+        public ActionResult ReportDetails(string id)
         {
             Report report = _reportRepository.GetReportById(id);
             if (report != null)
@@ -68,13 +68,14 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("CreateReport")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,ReportContent,ReportDate,ReportType")] Report report, HttpPostedFileBase[] attachedFile)
+        public ActionResult Create([Bind(Include = "Id,EncryptedId,Title,ReportContent,ReportDate,ReportType")] Report report, HttpPostedFileBase[] attachedFile)
         {
             if (ModelState.IsValid)
             {
                 Report newReport = new Report
                 {
                     ProfileId = GetProfile().Id,
+                    EncryptedId = Guid.NewGuid().ToString(),
                     Title = report.Title,
                     ReportContent = report.ReportContent,
                     ReportDate = report.ReportDate,
@@ -97,7 +98,7 @@ namespace ReportApp.Web.Controllers
             return View(report);
         }
 
-        public ActionResult EditReport(int id)
+        public ActionResult EditReport(string id)
         {
             Report report = _reportRepository.GetReportById(id);
             if (report != null)
@@ -109,7 +110,7 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("EditReport")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,ReportContent,ReportDate,ReportType")] Report report, HttpPostedFileBase[] attachedFile)
+        public ActionResult Edit([Bind(Include = "Id,EncryptedId,Title,ReportContent,ReportDate,ReportType")] Report report, HttpPostedFileBase[] attachedFile)
         {
             if (ModelState.IsValid)
             {
@@ -130,8 +131,7 @@ namespace ReportApp.Web.Controllers
             return View(report);
         }
 
-
-        public ActionResult DeleteReport(int id)
+        public ActionResult DeleteReport(string id)
         {
             Report report = _reportRepository.GetReportById(id);
             if (report != null)
@@ -143,7 +143,7 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("DeleteReport")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
             _reportRepository.DeleteReport(id);
             _reportRepository.Save();
