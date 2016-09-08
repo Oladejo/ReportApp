@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.SubmissionDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditReport", new { id = item.Id }) |
-            @Html.ActionLink("Details", "ReportDetails", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "DeleteReport", new { id = item.Id })
+            @Html.ActionLink("Edit", "EditReport", new { id = item.EncryptedId }) |
+            @Html.ActionLink("Details", "ReportDetails", new { id=item.EncryptedId }) |
+            @Html.ActionLink("Delete", "DeleteReport", new { id = item.EncryptedId })
         </td>
     </tr>
 }

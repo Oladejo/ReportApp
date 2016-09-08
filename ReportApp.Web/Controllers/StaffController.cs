@@ -68,7 +68,7 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("CreateReport")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EncryptedId,Title,ReportContent,ReportDate,ReportType")] Report report, HttpPostedFileBase[] attachedFile)
+        public ActionResult Create([Bind(Include = "Title,ReportContent,ReportDate,ReportType")] Report report, HttpPostedFileBase[] attachedFile)
         {
             if (ModelState.IsValid)
             {
