@@ -8,9 +8,9 @@ namespace ReportApp.Core.Abstract
     public interface IReportRepository : IDisposable
     {
         IEnumerable<Report> GetReport();
-        Report GetReportById(int reportId);
+        Report GetReportById(string reportId);
         void InsertReport(Report report);
-        void DeleteReport(int reportId);
+        void DeleteReport(string reportId);
         void UpdateReport(Report report);
         void Save();
         AttachedFile GetAttachedFile(int id);

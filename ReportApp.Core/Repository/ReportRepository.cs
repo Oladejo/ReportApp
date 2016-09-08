@@ -24,9 +24,9 @@ namespace ReportApp.Core.Repository
             return _context.Reports.ToList();
         }
 
-        public Report GetReportById(int reportId)
+        public Report GetReportById(string reportId)
         {
-            return _context.Reports.Find(reportId);
+            return _context.Reports.FirstOrDefault(x => x.EncryptedId == reportId);
         }
 
         public void InsertReport(Report report)
@@ -34,7 +34,7 @@ namespace ReportApp.Core.Repository
             _context.Reports.Add(report);
         }
 
-        public void DeleteReport(int reportId)
+        public void DeleteReport(string reportId)
         {
             Report report = GetReportById(reportId);
             _context.Reports.Remove(report);

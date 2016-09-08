@@ -11,6 +11,8 @@ namespace ReportApp.Core.Entities
         [Key]
         public int Id { get; set; }
 
+        public string EncryptedId { get; set; }
+
         [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
         [StringLength(100, MinimumLength = 3)]
         [Index]
