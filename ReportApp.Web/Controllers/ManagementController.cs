@@ -274,7 +274,7 @@ namespace ReportApp.Web.Controllers
             return View(reports);
         }
 
-        public ActionResult ReportDetails(int id)
+        public ActionResult ReportDetails(string id)
         {
             Report report = _reportRepository.GetReportById(id);
             if (report != null)
