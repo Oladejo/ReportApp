@@ -97,7 +97,7 @@ namespace ReportApp.Web.Controllers
         }
 
         //staff report details
-        public ActionResult ReportDetails(int id)
+        public ActionResult ReportDetails(string id)
         {
             Report report = _reportRepository.GetReportById(id);
             if (report != null)
