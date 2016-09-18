@@ -286,12 +286,24 @@ namespace ReportApp.Web.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _roleManager.Dispose();
-            _departmentRepository.Dispose();
-            _userManager.Dispose();
-            _reportRepository.Dispose();
-            _staffRepository.Dispose();
-            _unitRepository.Dispose();
+            if (disposing)
+            {
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+
+                if (_roleManager != null)
+                {
+                    _roleManager.Dispose();
+                    _roleManager = null;
+                }
+                _departmentRepository.Dispose();
+                _reportRepository.Dispose();
+                _staffRepository.Dispose();
+                _unitRepository.Dispose();
+            }
             base.Dispose(disposing);
         }
     }
