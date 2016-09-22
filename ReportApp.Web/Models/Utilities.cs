@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
 using ReportApp.Core.Repository;
@@ -13,6 +9,7 @@ namespace ReportApp.Web.Models
     {
         private readonly IReportRepository _reportRepository = new ReportRepository(new EfDbContext());
 
+        [Route("report/{id}")]
         public ActionResult DownloadAttachedFile(int id)
         {
             var fileToRetrieve = _reportRepository.GetAttachedFile(id);

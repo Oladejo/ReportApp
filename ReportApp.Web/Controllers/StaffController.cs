@@ -28,7 +28,6 @@ namespace ReportApp.Web.Controllers
             _reportRepository = reportRepository;
         }
 
-
         // GET: Staff
         public ActionResult Index()
         {
