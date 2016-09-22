@@ -161,15 +161,37 @@ namespace ReportApp.Web.Controllers
                 var profile = _staffRepository.GetProfileById(roleModel.Id);
                 if (profile != null)
                 {
-                    if (selectedRoles != null)
+                    //Get previous role assign to the user
+                    var userRoles = await UserManager.GetRolesAsync(profile.Staff.Id);
+                    selectedRoles = selectedRoles ?? new string[] { }; 
+
+                    //add new roles to the user
+                    var result = await UserManager.AddToRolesAsync(profile.Staff.Id, selectedRoles.Except(userRoles).ToArray());
+                    if (!result.Succeeded)
                     {
-                        var result = await UserManager.AddToRolesAsync(roleModel.Id, selectedRoles);
-                        if (!result.Succeeded)
-                        {
-                            ModelState.AddModelError("", result.Errors.First());
-                            return View();
-                        }
+                        ModelState.AddModelError("", result.Errors.First());
+                        return View();
                     }
+
+                    //remove previous role from the user
+                    result = await UserManager.RemoveFromRolesAsync(profile.Staff.Id, userRoles.Except(selectedRoles).ToArray());
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError("", result.Errors.First());
+                        return View();
+                    }
+                    return RedirectToAction("Index");
+
+                    //if (selectedRoles != null)
+                    //{
+                    //    var result = await UserManager.AddToRolesAsync(roleModel.Id, selectedRoles);
+                    //    if (!result.Succeeded)
+                    //    {
+                    //        ModelState.AddModelError("", result.Errors.First());
+                    //        return View();
+                    //    }
+                    //    return RedirectToAction("Index");
+                    //}
                 }
                 return HttpNotFound();
             }
