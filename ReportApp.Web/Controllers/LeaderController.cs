@@ -96,7 +96,12 @@ namespace ReportApp.Web.Controllers
             return View(reports);
         }
 
-        
+        //Get list of reports of a particular staff
+        public ActionResult StaffReports(string id)
+        {
+            var reports = _reportRepository.GetReport().Where(x => x.Profile.Staff.Id == id).ToList();
+            return View(reports);
+        }
 
         //staff report details
         public ActionResult ReportDetails(string id)
