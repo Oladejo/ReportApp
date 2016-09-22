@@ -204,7 +204,7 @@ namespace ReportApp.Web.Controllers
             return View(RoleManager.Roles);
         }
         
-        public ActionResult EditAccount(int id)
+        public ActionResult EditAccount(string id)
         {
             Profile profile = _staffRepository.GetProfileById(id);
             if (profile != null)
@@ -275,7 +275,7 @@ namespace ReportApp.Web.Controllers
 
         [HttpPost, ActionName("DeleteAccount")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteAccount(int id)
+        public ActionResult Delete(string id)
         {
             _staffRepository.DeleteProfile(id);
             _staffRepository.Save();
@@ -290,9 +290,9 @@ namespace ReportApp.Web.Controllers
         }
 
         //Get list of reports of a particular staff
-        public ActionResult StaffReports(int id)
+        public ActionResult StaffReports(string id)
         {
-            var reports = _reportRepository.GetReport().Where(x => x.Profile.Id == id).ToList();
+            var reports = _reportRepository.GetReport().Where(x => x.Profile.Staff.Id == id).ToList();
             return View(reports);
         }
 

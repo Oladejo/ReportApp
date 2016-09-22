@@ -31,7 +31,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ReportContent)
+            @Html.Raw(Model.ReportContent)
         </dd>
 
         <dt>
@@ -57,6 +57,19 @@
         <dd>
             @Html.DisplayFor(model => model.ReportType)
         </dd>
+        @if (Model.AttachedFile.Count > 0)
+        {
+            <dt>
+                Attached Document(s)
+            </dt>
+            foreach (var item in Model.AttachedFile)
+            {
+                <dd>
+                    @Html.DisplayFor(model => item.FileName) |
+                    @Html.ActionLink("Download", "DownloadAttachedFile", new { id = item.Id })
+                </dd>
+            }
+        }
 
     </dl>
 </div>

@@ -49,9 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Staff.Email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditAccount", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-                @Html.ActionLink("Delete", "DeleteAccount", new { id = item.Id }) |
+                @Html.ActionLink("Edit", "EditAccount", new { id = item.Staff.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Staff.Id }) |
+                @Html.ActionLink("Delete", "DeleteAccount", new {id = item.Staff.Id}) |
+                @Html.ActionLink("Report", "StaffReports", new { id = item.Staff.Id }) |
                 @Html.ActionLink("Assign Role", "AssignRole", new { id = item.Staff.Id })
             </td>
         </tr>

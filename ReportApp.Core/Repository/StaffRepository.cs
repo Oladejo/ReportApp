@@ -44,7 +44,7 @@ namespace ReportApp.Core.Repository
             _context.Profiles.Add(profile);
         }
 
-        public void DeleteProfile(int profileId)
+        public void DeleteProfile(string profileId)
         {
             Profile profile = GetProfileById(profileId);
             _context.Entry(profile.Staff).State = EntityState.Deleted;

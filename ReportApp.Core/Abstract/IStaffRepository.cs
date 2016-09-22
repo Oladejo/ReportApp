@@ -11,7 +11,7 @@ namespace ReportApp.Core.Abstract
         Profile GetProfileById(string id);
         Profile GetProfileById(int id);
         void InsertProfile(Profile profile);
-        void DeleteProfile(int profileId);
+        void DeleteProfile(string profileId);
         void UpdateProfile(Profile profile);
         void Save();
     }
