@@ -96,6 +96,8 @@ namespace ReportApp.Web.Controllers
             return View(reports);
         }
 
+        
+
         //staff report details
         public ActionResult ReportDetails(string id)
         {

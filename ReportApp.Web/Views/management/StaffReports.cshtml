@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ReportContent)
+            @Html.Raw(item.ReportContent)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ReportDate)
@@ -50,7 +50,7 @@
             @Html.DisplayFor(modelItem => item.ReportType)
         </td>
         <td>
-            @Html.ActionLink("Details", "ReportDetails", new { id = item.Id })
+            @Html.ActionLink("Details", "ReportDetails", new { id = item.EncryptedId })
         </td>
     </tr>
 }

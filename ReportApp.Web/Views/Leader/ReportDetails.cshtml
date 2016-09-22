@@ -27,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ReportContent)
+            @Html.Raw(Model.ReportContent)
         </dt>
 
         <dd>
@@ -74,5 +74,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Reports")
 </p>

@@ -1,9 +1,10 @@
-﻿
+﻿@model ReportApp.Core.Entities.Profile
+
 @{
-    ViewBag.Title = "Staff Details";
+    ViewBag.Title = "Details";
 }
 
-<h2>Staff Details</h2>
+<h2>Details</h2>
 
 <div>
     <h4>Profile</h4>
@@ -19,25 +20,35 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Staff.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Staff.PhoneNumber)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Gender)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Gender)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Unit.UnitName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Unit.UnitName)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Unit.Department.DepartmentName)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Unit.Department.DepartmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.UnitName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.UnitName)
         </dd>
     </dl>
 </div>

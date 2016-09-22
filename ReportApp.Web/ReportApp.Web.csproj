@@ -459,6 +459,7 @@
     <Content Include="Views\management\Reports.cshtml" />
     <Content Include="Views\management\StaffReports.cshtml" />
     <Content Include="Views\management\ReportDetails.cshtml" />
+    <Content Include="Views\Leader\StaffReports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
