@@ -4,14 +4,13 @@
     ViewBag.Title = "Assign Role";
 }
 
-<h2>AssignRole</h2>
+<h2>Assign Role</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>AssignRoleModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)

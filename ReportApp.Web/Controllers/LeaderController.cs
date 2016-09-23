@@ -38,9 +38,11 @@ namespace ReportApp.Web.Controllers
             {
                 case "Department":
                     staff = _staffRepository.GetProfile.Where(x => x.Unit.DepartmentId == profile.Unit.DepartmentId).ToList();
+                    ViewBag.role = "department";
                     break;
                 case "Unit":
                     staff = _staffRepository.GetProfile.Where(x => x.UnitId == profile.UnitId).ToList();
+                    ViewBag.role = "unit";
                     break;
             }
             return View(staff);
