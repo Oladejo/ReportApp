@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ReportContent)
+            @Html.Raw(item.ReportContent)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ReportDate)

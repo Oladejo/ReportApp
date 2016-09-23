@@ -292,6 +292,9 @@ namespace ReportApp.Web.Controllers
         //Get list of reports of a particular staff
         public ActionResult StaffReports(string id)
         {
+            Profile profile = _staffRepository.GetProfileById(id);
+            ViewBag.User = profile.FullName;
+
             var reports = _reportRepository.GetReport().Where(x => x.Profile.Staff.Id == id).ToList();
             return View(reports);
         }

@@ -29,27 +29,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Profile.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReportDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubmissionDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReportType)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.EncryptedId }) 
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profile.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReportDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmissionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReportType)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new {id = item.EncryptedId})
+            </td>
+        </tr>
+    }
 
 </table>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

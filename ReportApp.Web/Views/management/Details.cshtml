@@ -4,12 +4,11 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Profile</h4>
+    <h4> @Html.DisplayFor(model => model.FullName) Profile</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.FullName)
         </dt>
@@ -19,11 +18,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Unit.UnitName)
+            @Html.DisplayNameFor(model => model.Staff.PhoneNumber)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Unit.UnitName)
+            @Html.DisplayFor(model => model.Staff.PhoneNumber)
         </dd>
 
         <dt>
@@ -34,6 +33,37 @@
             @Html.DisplayFor(model => model.Gender)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Staff.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Staff.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Staff.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Staff.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.Department.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Department.DepartmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.UnitName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.UnitName)
+        </dd>
     </dl>
 </div>
 <p>

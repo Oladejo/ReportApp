@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item.Gender)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new {id = item.Staff.Id}) |
+            @Html.ActionLink("Profile", "Details", new {id = item.Staff.Id}) |
             @Html.ActionLink("Reports", "StaffReports", new { id = item.Staff.Id }) 
         </td>
     </tr>
