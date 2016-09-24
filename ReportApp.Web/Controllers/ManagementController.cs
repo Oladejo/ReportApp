@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
+using PagedList;
 using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
 using ReportApp.Core.Entities;
@@ -68,9 +70,70 @@ namespace ReportApp.Web.Controllers
         }
 
         // GET: Staff List
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            return View(_staffRepository.GetProfile.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.GenderSort = sortOrder == "gender" ? "gender_desc" : "gender";
+            ViewBag.UnitSort = sortOrder == "unit" ? "unit_desc" : "unit";
+            ViewBag.DepartmentSort = sortOrder == "department" ? "department_desc" : "department";
+            ViewBag.EmailSort = sortOrder == "email" ? "email_desc" : "email";
+            
+            //use in pagination process
+            if (searchString != null){
+                    page = 1;
+            }
+            else {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            var staffs = _staffRepository.GetProfile;
+
+            //use for searching
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                staffs = staffs.Where(s => s.FullName.Contains(searchString) || s.Unit.UnitName.Contains(searchString) 
+                    || s.Unit.Department.DepartmentName.Contains(searchString) || s.Staff.Email.Contains(searchString));
+            }
+            //use for sorting
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    staffs = staffs.OrderByDescending(s => s.FullName);
+                    break;
+                case "gender":
+                    staffs = staffs.OrderBy(s => s.Gender);
+                    break;
+                case "gender_desc":
+                    staffs = staffs.OrderByDescending(s => s.Gender);
+                    break;
+                case "unit_desc":
+                    staffs = staffs.OrderByDescending(s => s.Unit.UnitName);
+                    break;
+                case "unit":
+                    staffs = staffs.OrderBy(s => s.Unit.UnitName);
+                    break;
+                case "department_desc":
+                    staffs = staffs.OrderByDescending(s => s.Unit.Department.DepartmentName);
+                    break;
+                case "department":
+                    staffs = staffs.OrderBy(s => s.Unit.Department.DepartmentName);
+                    break;
+                case "email_desc":
+                    staffs = staffs.OrderByDescending(s => s.Staff.Email);
+                    break;
+                case "email":
+                    staffs = staffs.OrderBy(s => s.Staff.Email);
+                    break;
+                default:
+                    staffs = staffs.OrderBy(s => s.FullName);
+                    break;
+            }
+
+            const int pageSize = 2;
+            int pageNumber = (page ?? 1);
+            return View(staffs.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult CreateAccount()
