@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ReportApp.Core.Entities.Profile>
+﻿@model PagedList.IPagedList<ReportApp.Core.Entities.Profile>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -7,38 +9,58 @@
 <h2>Staff list under your @ViewBag.role </h2>
 
 <p>
-    @Html.ActionLink("All Reports", "Reports")
+    @Html.ActionLink("All Reports", "Reports") |
+    @using (Html.BeginForm("Index", "Leader", FormMethod.Get))
+    {
+        <b>  Find by anything  : </b> @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    }
 </p>
 <table class="table">
     <tr>
+        <th>SN</th>
         <th>
-            @Html.DisplayNameFor(model => model.FullName)
+            @Html.ActionLink("FullName", "Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Unit.UnitName)
+            @Html.ActionLink("Unit", "Index", new { sortOrder = ViewBag.UnitSort, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gender)
+            @Html.ActionLink("Gender", "Index", new { sortOrder = ViewBag.GenderSort, currentFilter = ViewBag.CurrentFilter })
         </th>
+        @*<th>
+                @Html.ActionLink("Department", "Index", new { sortOrder = ViewBag.DepartmentSort, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSort, currentFilter = ViewBag.CurrentFilter })
+            </th>*@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Unit.UnitName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.ActionLink("Profile", "Details", new {id = item.Staff.Id}) |
-            @Html.ActionLink("Reports", "StaffReports", new { id = item.Staff.Id }) 
-        </td>
-    </tr>
-}
+    @{int a = 1;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@a</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit.UnitName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.ActionLink("Profile", "Details", new { id = item.Staff.Id }) |
+                @Html.ActionLink("Reports", "StaffReports", new { id = item.Staff.Id })
+            </td>
+        </tr>
+        a++;
+    }
 
 </table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
