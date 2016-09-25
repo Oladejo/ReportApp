@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PagedList;
 using ReportApp.Core.Abstract;
 using ReportApp.Core.Concrete;
 using ReportApp.Core.Entities;
@@ -29,23 +31,91 @@ namespace ReportApp.Web.Controllers
         }
 
         // GET staffs based on the role assign to the user
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
             var profile = GetProfile();
-            List<Profile> staff = null;
+            IEnumerable<Profile> staffs = null;
             string role = GetUserRole();
+            
             switch (role)
             {
                 case "Department":
-                    staff = _staffRepository.GetProfile.Where(x => x.Unit.DepartmentId == profile.Unit.DepartmentId).ToList();
+                    staffs = _staffRepository.GetProfile.Where(x => x.Unit.DepartmentId == profile.Unit.DepartmentId);
                     ViewBag.role = "department";
                     break;
                 case "Unit":
-                    staff = _staffRepository.GetProfile.Where(x => x.UnitId == profile.UnitId).ToList();
+                    staffs = _staffRepository.GetProfile.Where(x => x.UnitId == profile.UnitId);
                     ViewBag.role = "unit";
                     break;
             }
-            return View(staff);
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.GenderSort = sortOrder == "gender" ? "gender_desc" : "gender";
+            ViewBag.UnitSort = sortOrder == "unit" ? "unit_desc" : "unit";
+            ViewBag.DepartmentSort = sortOrder == "department" ? "department_desc" : "department";
+            ViewBag.EmailSort = sortOrder == "email" ? "email_desc" : "email";
+
+            //use in pagination process
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (staffs != null)
+            {
+                //use for searching
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    staffs = staffs.Where(s => s.FullName.Contains(searchString) || s.Unit.UnitName.Contains(searchString)
+                        || s.Unit.Department.DepartmentName.Contains(searchString) || s.Staff.Email.Contains(searchString));
+                }
+
+                //use for sorting
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        staffs = staffs.OrderByDescending(s => s.FullName);
+                        break;
+                    case "gender":
+                        staffs = staffs.OrderBy(s => s.Gender);
+                        break;
+                    case "gender_desc":
+                        staffs = staffs.OrderByDescending(s => s.Gender);
+                        break;
+                    case "unit_desc":
+                        staffs = staffs.OrderByDescending(s => s.Unit.UnitName);
+                        break;
+                    case "unit":
+                        staffs = staffs.OrderBy(s => s.Unit.UnitName);
+                        break;
+                    case "department_desc":
+                        staffs = staffs.OrderByDescending(s => s.Unit.Department.DepartmentName);
+                        break;
+                    case "department":
+                        staffs = staffs.OrderBy(s => s.Unit.Department.DepartmentName);
+                        break;
+                    case "email_desc":
+                        staffs = staffs.OrderByDescending(s => s.Staff.Email);
+                        break;
+                    case "email":
+                        staffs = staffs.OrderBy(s => s.Staff.Email);
+                        break;
+                    default:
+                        staffs = staffs.OrderBy(s => s.FullName);
+                        break;
+                }
+            }
+
+            const int pageSize = 1;
+            int pageNumber = (page ?? 1);
+            return View(staffs.ToPagedList(pageNumber, pageSize));
         }
 
         private Profile GetProfile()

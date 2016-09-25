@@ -90,45 +90,49 @@ namespace ReportApp.Web.Controllers
             ViewBag.CurrentFilter = searchString;
             var staffs = _staffRepository.GetProfile;
 
-            //use for searching
-            if (!String.IsNullOrEmpty(searchString))
+            if (staffs != null)
             {
-                staffs = staffs.Where(s => s.FullName.Contains(searchString) || s.Unit.UnitName.Contains(searchString) 
-                    || s.Unit.Department.DepartmentName.Contains(searchString) || s.Staff.Email.Contains(searchString));
-            }
-            //use for sorting
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    staffs = staffs.OrderByDescending(s => s.FullName);
-                    break;
-                case "gender":
-                    staffs = staffs.OrderBy(s => s.Gender);
-                    break;
-                case "gender_desc":
-                    staffs = staffs.OrderByDescending(s => s.Gender);
-                    break;
-                case "unit_desc":
-                    staffs = staffs.OrderByDescending(s => s.Unit.UnitName);
-                    break;
-                case "unit":
-                    staffs = staffs.OrderBy(s => s.Unit.UnitName);
-                    break;
-                case "department_desc":
-                    staffs = staffs.OrderByDescending(s => s.Unit.Department.DepartmentName);
-                    break;
-                case "department":
-                    staffs = staffs.OrderBy(s => s.Unit.Department.DepartmentName);
-                    break;
-                case "email_desc":
-                    staffs = staffs.OrderByDescending(s => s.Staff.Email);
-                    break;
-                case "email":
-                    staffs = staffs.OrderBy(s => s.Staff.Email);
-                    break;
-                default:
-                    staffs = staffs.OrderBy(s => s.FullName);
-                    break;
+                //use for searching
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    staffs = staffs.Where(s => s.FullName.Contains(searchString) || s.Unit.UnitName.Contains(searchString)
+                        || s.Unit.Department.DepartmentName.Contains(searchString) || s.Staff.Email.Contains(searchString));
+                }
+
+                //use for sorting
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        staffs = staffs.OrderByDescending(s => s.FullName);
+                        break;
+                    case "gender":
+                        staffs = staffs.OrderBy(s => s.Gender);
+                        break;
+                    case "gender_desc":
+                        staffs = staffs.OrderByDescending(s => s.Gender);
+                        break;
+                    case "unit_desc":
+                        staffs = staffs.OrderByDescending(s => s.Unit.UnitName);
+                        break;
+                    case "unit":
+                        staffs = staffs.OrderBy(s => s.Unit.UnitName);
+                        break;
+                    case "department_desc":
+                        staffs = staffs.OrderByDescending(s => s.Unit.Department.DepartmentName);
+                        break;
+                    case "department":
+                        staffs = staffs.OrderBy(s => s.Unit.Department.DepartmentName);
+                        break;
+                    case "email_desc":
+                        staffs = staffs.OrderByDescending(s => s.Staff.Email);
+                        break;
+                    case "email":
+                        staffs = staffs.OrderBy(s => s.Staff.Email);
+                        break;
+                    default:
+                        staffs = staffs.OrderBy(s => s.FullName);
+                        break;
+                }
             }
 
             const int pageSize = 10;
