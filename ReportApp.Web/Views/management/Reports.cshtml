@@ -10,7 +10,7 @@
 <p>
     @using (Html.BeginForm("Reports", "Management", FormMethod.Get))
     {
-        <b>  Find by anything  : </b> @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <b>  Find by anything : </b> @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     }
 </p>

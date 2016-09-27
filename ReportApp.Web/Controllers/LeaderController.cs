@@ -151,21 +151,85 @@ namespace ReportApp.Web.Controllers
         }
 
         //Staff reports list
-        public ActionResult Reports()
+        public ActionResult Reports(string sortOrder, string searchString, string currentFilter, int? page)
         {
             var profile = GetProfile();
-            List<Report> reports = null;
+            IEnumerable<Report> reports = null;
             string role = GetUserRole();
             switch (role)
             {
                 case "Department":
-                    reports = _reportRepository.GetReport().Where(x => x.Profile.Unit.DepartmentId == profile.Unit.DepartmentId).ToList();
+                    reports =
+                        _reportRepository.GetReport()
+                            .Where(x => x.Profile.Unit.DepartmentId == profile.Unit.DepartmentId);
+                    ViewBag.role = "department";
                     break;
                 case "Unit":
-                    reports = _reportRepository.GetReport().Where(x => x.Profile.UnitId == profile.UnitId).ToList();
+                    reports = _reportRepository.GetReport().Where(x => x.Profile.UnitId == profile.UnitId);
+                    ViewBag.role = "unit";
                     break;
             }
-            return View(reports);
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = sortOrder == "name" ? "name_desc" : "name";
+            ViewBag.reportDateSort = sortOrder == "reportDate" ? "reportDate_desc" : "reportDate";
+            ViewBag.submissionDateSort = String.IsNullOrEmpty(sortOrder) ? "submissionDate_desc" : "";
+            ViewBag.typeSort = sortOrder == "type" ? "type_desc" : "type";
+
+            //use in pagination process
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (reports != null)
+            {
+                //use for searching
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    //search only by FullName
+                    reports = reports.Where(s => s.Profile.FullName.Contains(searchString)).OrderByDescending(s => s.SubmissionDate);
+                }
+
+                //use for sorting
+                switch (sortOrder)
+                {
+                    case "name":
+                        reports = reports.OrderBy(s => s.Profile.FullName);
+                        break;
+                    case "name_desc":
+                        reports = reports.OrderByDescending(s => s.Profile.FullName);
+                        break;
+                    case "reportDate":
+                        reports = reports.OrderBy(s => s.ReportDate);
+                        break;
+                    case "reportDate_desc":
+                        reports = reports.OrderByDescending(s => s.ReportDate);
+                        break;
+                    case "submissionDate_desc":
+                        reports = reports.OrderBy(s => s.SubmissionDate);
+                        break;
+                    case "type_desc":
+                        reports = reports.OrderByDescending(s => s.ReportType);
+                        break;
+                    case "type":
+                        reports = reports.OrderBy(s => s.ReportType);
+                        break;
+                    default:
+                        reports = reports.OrderByDescending(s => s.SubmissionDate);
+                        break;
+                }
+            }
+
+            const int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(reports.ToPagedList(pageNumber, pageSize));
         }
 
         //Get list of reports of a particular staff
