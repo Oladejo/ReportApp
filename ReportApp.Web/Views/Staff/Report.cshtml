@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ReportApp.Core.Entities.Report>
+﻿@model PagedList.IPagedList<ReportApp.Core.Entities.Report>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Report";
@@ -7,48 +9,61 @@
 <h2>Report</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateReport")
+    @Html.ActionLink("Create New", "CreateReport") || @Html.ActionLink("Back to Profile", "Index")
+    @using (Html.BeginForm("Reports", "Management", FormMethod.Get))
+    {
+        <b>  Find by anything : </b> @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    }
+    
 </p>
 <table class="table">
     <tr>
+        <th>SN</th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.ActionLink("Title", "Report", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-             Type of Report
+            @Html.ActionLink("Report Type", "Report", new { sortOrder = ViewBag.typeSort, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ReportDate)
+            @Html.ActionLink("Report Date", "Report", new { sortOrder = ViewBag.reportDateSort, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SubmissionDate)
+            @Html.ActionLink("Submission Date", "Report", new { sortOrder = ViewBag.submissionDateSort, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReportType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReportDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubmissionDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditReport", new { id = item.EncryptedId }) |
-            @Html.ActionLink("Details", "ReportDetails", new { id=item.EncryptedId }) |
-            @Html.ActionLink("Delete", "DeleteReport", new { id = item.EncryptedId })
-        </td>
-    </tr>
-}
+    @{int a = 1;}
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@a</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReportType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReportDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmissionDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditReport", new { id = item.EncryptedId }) |
+                @Html.ActionLink("Details", "ReportDetails", new { id = item.EncryptedId }) |
+                @Html.ActionLink("Delete", "DeleteReport", new { id = item.EncryptedId })
+            </td>
+        </tr>
+        a++;
+    }
 
 </table>
-<div>
-    @Html.ActionLink("Back to Profile", "Index")
-</div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Report",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
